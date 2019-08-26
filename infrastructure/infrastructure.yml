@@ -1,0 +1,175 @@
+
+Description: >
+  Cloudformation stack for the ops-hire-project
+
+Parameters:
+  Name:
+    Description: Name of the project
+    Type: String
+    Default: ops-hire-project
+
+  Environment:
+    Description: Environment tag (i.e. 'dev'). All resources will be tagged with this value
+    Type: String
+    Default: dev
+
+  VPCCidrBlock: 
+    Description: CIDR for VPC
+    Type: String
+    Default: 10.10.0.0/16
+
+  PublicSubnet1CidrBlock: 
+    Description: CIDR for subnet
+    Type: String
+    Default: 10.10.1.0/24
+
+  PrivateSubnet1CidrBlock: 
+    Description: CIDR for subnet
+    Type: String
+    Default: 10.10.3.0/24
+
+  AvailabilityZone1: 
+    Description: Availability Zone 1
+    Type: String
+    Default: us-east-1b
+
+Resources:
+  VPC: 
+    Type: AWS::EC2::VPC
+    Properties: 
+      CidrBlock: !Ref VPCCidrBlock
+      EnableDnsHostnames: true
+      Tags: 
+        - Key: Name
+          Value: !Join ['-', [!Ref Name, !Ref Environment]] 
+
+  PublicSubnet1: 
+    Type: AWS::EC2::Subnet
+    Properties: 
+      VpcId: !Ref VPC
+      AvailabilityZone: !Ref AvailabilityZone1
+      CidrBlock: !Ref PublicSubnet1CidrBlock
+      Tags: 
+        - Key: Network
+          Value: Public
+        - Key: Name
+          Value: public-1
+
+  PrivateSubnet1: 
+    Type: AWS::EC2::Subnet
+    Properties: 
+      VpcId: !Ref VPC
+      AvailabilityZone: !Ref AvailabilityZone1
+      CidrBlock: !Ref PrivateSubnet1CidrBlock
+      Tags: 
+        - Key: Network
+          Value: Private
+        - Key: Name
+          Value: private-1
+
+  InternetGateway: 
+    Type: AWS::EC2::InternetGateway
+    Properties: 
+      Tags: 
+        - Key: Network
+          Value: Public
+
+  AttachGateway: 
+    Type: AWS::EC2::VPCGatewayAttachment
+    Properties: 
+      VpcId: !Ref VPC
+      InternetGatewayId: !Ref InternetGateway
+
+  NatGwEip:
+    Type: AWS::EC2::EIP
+    Properties:
+      Domain: vpc
+
+  NAT: 
+    DependsOn: AttachGateway
+    Type: AWS::EC2::NatGateway
+    Properties: 
+      AllocationId: !GetAtt NatGwEip.AllocationId
+      SubnetId: !Ref PublicSubnet1
+
+  PublicRouteTable: 
+    Type: AWS::EC2::RouteTable
+    Properties: 
+      VpcId: !Ref VPC
+      Tags: 
+        - Key: Network
+          Value: Public
+
+  PrivateRouteTable: 
+    Type: AWS::EC2::RouteTable
+    Properties: 
+      VpcId: !Ref VPC
+      Tags: 
+        - Key: Network
+          Value: Private
+
+  PublicRoute: 
+    Type: AWS::EC2::Route
+    DependsOn: AttachGateway
+    Properties: 
+      RouteTableId: !Ref PublicRouteTable
+      DestinationCidrBlock: 0.0.0.0/0
+      GatewayId: !Ref InternetGateway
+
+  PrivateRoute:
+    Type: AWS::EC2::Route
+    DependsOn: AttachGateway
+    Properties: 
+      RouteTableId: !Ref PrivateRouteTable
+      DestinationCidrBlock: 0.0.0.0/0
+      NatGatewayId: !Ref NAT
+
+  PrivateSubnet1RouteTableAssociation: 
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties: 
+      SubnetId: !Ref PrivateSubnet1
+      RouteTableId: !Ref PrivateRouteTable
+
+  PublicSubnet1RouteTableAssociation: 
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties: 
+      SubnetId: !Ref PublicSubnet1
+      RouteTableId: !Ref PublicRouteTable
+
+  NetworkAcl: 
+    Type: AWS::EC2::NetworkAcl
+    Properties: 
+      VpcId: !Ref VPC
+      Tags: []
+
+  InboundHTTPNetworkAclEntry: 
+    Type: AWS::EC2::NetworkAclEntry
+    Properties: 
+      NetworkAclId: !Ref NetworkAcl
+      CidrBlock: 0.0.0.0/0
+      Egress: false
+      Protocol: -1
+      RuleAction: allow
+      RuleNumber: 100
+
+  OutboundHTTPNetworkAclEntry: 
+    Type: AWS::EC2::NetworkAclEntry
+    Properties: 
+      NetworkAclId: !Ref NetworkAcl
+      CidrBlock: 0.0.0.0/0
+      Egress: true
+      Protocol: -1
+      RuleAction: allow
+      RuleNumber: 100
+
+  PublicSubnet1NetworkAclAssociation: 
+    Type: AWS::EC2::SubnetNetworkAclAssociation
+    Properties: 
+      SubnetId: !Ref PublicSubnet1
+      NetworkAclId: !Ref NetworkAcl
+
+  PrivateSubnet1NetworkAclAssociation: 
+    Type: AWS::EC2::SubnetNetworkAclAssociation
+    Properties: 
+      SubnetId: !Ref PublicSubnet1
+      NetworkAclId: !Ref NetworkAcl
