@@ -4,7 +4,7 @@
 
 At Contrast we like to play hard, work hard, and automate our SaaS environment end to end.
 
-There are two project options to choose from so our candidates can showcase their skills and give us a better idea of your individual talents!
+There are two project options to choose from so our candidates can showcase their skills and give us a better idea of their individual talents!
 
 # Project 1
 
