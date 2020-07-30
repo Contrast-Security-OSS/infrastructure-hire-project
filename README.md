@@ -1,39 +1,22 @@
-# Infrastructure Hire Project 
+# Infrastructure Hire Project
 
-# Introduction
+# Overview
 
-At Contrast we like to play hard, work hard, and automate our SaaS environment end to end. We made this project so you can showcase your skills and give us a better idea of your individual talents!
+At Contrast we like to play hard, work hard, and automate our SaaS environment end to end.
 
-# Setup
+There are two project options to choose from so our candidates can showcase their skills and give us a better idea of your individual talents!
 
-You will need the following:
+# Project 1
 
-* A fork of this repository (If you have concerns about this, let us know!)
-* An AWS account (Contrast will provide a temporary one)
-* Install Docker
-* Install Python
-* Install the [AWS CLI](https://aws.amazon.com/cli/) (`pip install awscli`)
+At Contrast, we use ECS Fargate and Python for automating tasks or even run small services [Project 1](./project1/README.md) focuses on deploying a Flask application to ECS Fargate using CloudFormation (or Terraform if you wish!).
 
-# Deploying the current stack
+The idea behind this project is for candidates to explore AWS technologies and maybe even learn a few! There's plenty of room for candidates to put their personal touch on this project, feel free to explore and show us what they are passionate about.
 
-```
-aws cloudformation deploy --template-file infrastructure/infrastructure.yml --stack-name ops-hire-project --tags Name=ops-hire-project Environment=dev
-```
+# Project 2
 
-# Tasks
+At Contrast, we use Kubernetes to orchestrate our containers. [Project 2](./project2/README.md) focuses on deploying a small Python application to EKS using Terraform.
 
-- Update the infrastructure to run the container in Fargate
-- Add monitoring for your service
-- Add an endpoint to `app.py` to return a file from an S3 bucket
-
-## Things to keep in mind 
-
-- Treat this like a production service - think about concepts such as reliability, principle of least privilege, availability, security, etc.
-- Break down the work into sizeable chunks (PR per task, commit per task, etc). Show us how you would approach this work.
-
-# Bonus points!
-
-Add what you feel could be missing from this project. Show us how you think about running a service in AWS and what you are passionate about.
+The idea behind this project is for candidates to showcase their knowledge of Python, Kubernetes, AWS, and Terraform. Just like project 1, we welcome candidates to think outside the box and show us what they are passionate about.
 
 # Feedback
 
