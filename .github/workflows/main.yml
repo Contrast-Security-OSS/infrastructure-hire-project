@@ -11,7 +11,9 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - name: Build the Docker image
-      run: docker build ./project2/apps/vulnerability-report/ --tag ${{ secrets.ECR_REPO_NAME }}:${{ github.sha }}
+      run: |
+      cd project2/apps/vulnerability-report
+      docker build . --tag ${{ secrets.ECR_REPO_NAME }}:${{ github.sha }}
     - name: Push to ECR (SHA)
       id: ecr-sha
       uses: rewardinsight/gh-ecr-push@master
