@@ -2,7 +2,7 @@ name: Docker Image Build
 on:
   push:
     paths:
-      - '../../project2/apps/vulnerability-report/*'
+      - '*/apps/vulnerability-report/*'
     branches:
       - master
 jobs:
