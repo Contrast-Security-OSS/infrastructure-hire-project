@@ -1,3 +1,6 @@
+##############################################################
+#  ECR Repo for Vulnerability reporting container
+##############################################################
 resource "aws_ecr_repository" "vulnerability_reporting" {
   name = "${var.project}-vulnerability-report"
 
