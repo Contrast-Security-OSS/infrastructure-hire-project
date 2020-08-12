@@ -13,3 +13,10 @@ variable "project" {
 variable "env" {
   default = "prod"
 }
+
+##############################################################
+# Kubernetes variables
+##############################################################
+variable "image_version" {
+  default = "v0.0.1"
+}
