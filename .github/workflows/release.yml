@@ -1,0 +1,46 @@
+name: Docker Image Build
+on:
+  push:
+    paths:
+      - 'project2/apps/vulnerability-report/*'
+    branches:
+      - master
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Bump version and push tag
+      id: bump_version
+      uses: anothrNick/github-tag-action@master
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        WITH_V: true
+        DEFAULT_BUMP: patch
+    - name: Create Release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ steps.bump_version.outputs.new_tag }}
+        release_name: ${{ steps.bump_version.outputs.new_tag }}
+        body: |
+          Merge to master, release created
+        draft: false
+        prerelease: false
+    - uses: actions/checkout@v1
+    - name: Build the Docker image
+      env:
+        TAG_VERSION: ${{ steps.bump_version.outputs.new_tag }}
+      run: docker build . --file Dockerfile --tag ${{ secrets.ECR_REPO_NAME }}:v$( echo ${TAG_VERSION} | cut -c2- ) --tag ${{ secrets.ECR_REPO_NAME }}:latest
+    - name: Push to ECR
+      env:
+        TAG_VERSION: ${{ steps.bump_version.outputs.new_tag }}
+      id: ecr
+      uses: rewardinsight/gh-ecr-push@master
+      with:
+         access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+         secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+         region: eu-west-1
+         image: ${{ secrets.ECR_REPO_NAME }}:v$( echo ${TAG_VERSION} | cut -c2- )

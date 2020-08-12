@@ -1,0 +1,31 @@
+name: Docker Image Build (CI)
+on:
+  push:
+    paths:
+      - 'project2/apps/vulnerability-report/*'
+    branches-ignore:
+      - master
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Build the Docker image
+      run: docker build . --tag ${{ secrets.ECR_REPO_NAME }}:${{ github.sha }}
+    - name: Push to ECR (SHA)
+      id: ecr-sha
+      uses: rewardinsight/gh-ecr-push@master
+      with:
+         access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+         secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+         region: eu-west-1
+         image: ${{ secrets.ECR_REPO_NAME }}:${{ github.sha }}
+    - name: Push to ECR (Latest)
+      id: ecr-latest
+      uses: rewardinsight/gh-ecr-push@master
+      with:
+        access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        region: eu-west-1
+        local-image: ${{ secrets.ECR_REPO_NAME }}:${{ github.sha }}
+        image: ${{ secrets.ECR_REPO_NAME }}:latest
