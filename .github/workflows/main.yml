@@ -26,6 +26,6 @@ jobs:
       with:
         access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        region: eu-west-1
+        region: us-east-1
         local-image: ${{ secrets.ECR_REPO_NAME }}:${{ github.sha }}
         image: ${{ secrets.ECR_REPO_NAME }}:latest

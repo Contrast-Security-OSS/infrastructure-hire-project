@@ -44,5 +44,5 @@ jobs:
       with:
          access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
          secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-         region: eu-west-1
+         region: us-east-1
          image: ${{ secrets.ECR_REPO_NAME }}:v$( echo ${TAG_VERSION} | cut -c2- )
