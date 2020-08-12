@@ -35,7 +35,7 @@ jobs:
         TAG_VERSION: ${{ steps.bump_version.outputs.new_tag }}
       run: |
       cd project2/apps/vulnerability-report
-      docker build . --file project2/apps/vulnerability-report/Dockerfile --tag ${{ secrets.ECR_REPO_NAME }}:v$( echo ${TAG_VERSION} | cut -c2- ) --tag ${{ secrets.ECR_REPO_NAME }}:latest
+      docker build ./project2/apps/vulnerability-report/ --file ./project2/apps/vulnerability-report/Dockerfile --tag ${{ secrets.ECR_REPO_NAME }}:v$( echo ${TAG_VERSION} | cut -c2- ) --tag ${{ secrets.ECR_REPO_NAME }}:latest
     - name: Push to ECR
       env:
         TAG_VERSION: ${{ steps.bump_version.outputs.new_tag }}
