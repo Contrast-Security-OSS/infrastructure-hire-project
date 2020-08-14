@@ -6,14 +6,7 @@ resource "null_resource" "update_config_map_aws_auth" {
   depends_on = [module.eks]
 
   provisioner "local-exec" {
-    command = "aws eks update-kubeconfig --name contrast-example"
-  }
-}
-
-# namespace
-resource "kubernetes_namespace" "project2" {
-  metadata {
-    name = var.project
+    command = "aws eks update-kubeconfig --name ${local.cluster_name}"
   }
 }
 
@@ -21,11 +14,16 @@ resource "kubernetes_namespace" "project2" {
 resource "kubernetes_pod" "vulnerability_report" {
   metadata {
     name      = "${var.project}-vulnerability-report"
-    # annotations = ADD A ROLE HERE
-    namespace = var.project
+    namespace = local.k8s_service_account_namespace
+
+    annotations = {
+      "iam.amazonaws.com/role" = module.iam_assumable_role_s3.this_iam_role_arn
+    }
   }
 
   spec {
+    service_account_name = local.k8s_service_account_name
+    automount_service_account_token = true
     container {
       image = "${aws_ecr_repository.vulnerability_reporting.repository_url}:${var.image_version}"
       name  = "vulnerability-report"
