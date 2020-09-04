@@ -25,16 +25,34 @@ The overall concept of this project is to deploy a container to EKS that runs a 
 
 1. Python script
 
-    Write a Python script to read the `example.json` file from the S3 bucket, calculate the counts of how many `LOW`, `MEDIUM`, and `HIGH` vulnerabilities are seen PER `vendor_id`, and upload a results file to the same S3 bucket.
+    Write a Python script to read the `example.json` file from the S3 bucket, calculate the counts of how many `LOW`, `MEDIUM`, and `HIGH` vulnerabilities are seen PER `vendor_id`, and upload a results file to the same S3 bucket, or return via http request.
 
 1. Create a Docker image for the Python script
 
 1. Create an ECR registry for the image
 
-1. Create the appropriate Kubernetes manifest(s) to run the Python script and exit
+1. Create the appropriate Kubernetes manifest(s) to run the Python script.
 
 1. Create an IAM role to be associated with the Kubernetes resource to allow the script to access S3
 
+### Senior Candidates Only
+For a senior candidate we'd like to explore more into your Kubernetes knowledge. In the directory flask, there is two python apps and a requirements file, that you can use a template to create your web service. The tasks is to create a simple web service, using a proxy agent that will encompass the above task, and return via HTTP.
+
+1. Create vulnerability image, and deploy service (you can use the vuln.py file as a starting point).
+
+1. Update proxy.py with the appropriate endpoints for vulnerability service
+
+1. Create proxy image, and deploy service fronted by an ALB
+
+1. Deploy nginx service and test you can get access via GET /evil endpoint
+```bash
+helm repo add bitnami https://charts.bitnami.com/bitnami
+helm install nginx bitnami/nginx --set service.type=ClusterIP
+```
+
+1. Test that GET /evil works and GET /vulns returns the appropriate data
+
+1. Utilizing a CNI or service mesh and restrict access from the proxy service to the nginx service
 
 ## Things to keep in mind
 
