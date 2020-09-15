@@ -23,15 +23,45 @@ Parameters:
     Type: String
     Default: 10.10.1.0/24
 
+  PublicSubnet2CidrBlock: 
+    Description: CIDR for subnet
+    Type: String
+    Default: 10.10.2.0/24
+
   PrivateSubnet1CidrBlock: 
     Description: CIDR for subnet
     Type: String
     Default: 10.10.3.0/24
+    
+  PrivateSubnet2CidrBlock: 
+    Description: CIDR for subnet2
+    Type: String
+    Default: 10.10.4.0/24
 
   AvailabilityZone1: 
     Description: Availability Zone 1
     Type: String
+    Default: us-east-1a
+
+  AvailabilityZone2: 
+    Description: Availability Zone 2
+    Type: String
     Default: us-east-1b
+
+  ImageTag:
+    Description: Container image tag
+    Type: String
+    Default: latest
+  Memory:
+    Description: Container memory
+    Type: String
+    Default: 0.5GB
+
+  Cpu:
+    Description: Container cpu
+    Type: String
+    Default: 256
+
 
 Resources:
   VPC: 
@@ -39,6 +69,7 @@ Resources:
     Properties: 
       CidrBlock: !Ref VPCCidrBlock
       EnableDnsHostnames: true
+      EnableDnsSupport: true
       Tags: 
         - Key: Name
           Value: !Join ['-', [!Ref Name, !Ref Environment]] 
@@ -49,11 +80,25 @@ Resources:
       VpcId: !Ref VPC
       AvailabilityZone: !Ref AvailabilityZone1
       CidrBlock: !Ref PublicSubnet1CidrBlock
+      MapPublicIpOnLaunch: true
       Tags: 
         - Key: Network
           Value: Public
         - Key: Name
           Value: public-1
+
+  PublicSubnet2: 
+    Type: AWS::EC2::Subnet
+    Properties: 
+      VpcId: !Ref VPC
+      AvailabilityZone: !Ref AvailabilityZone2
+      CidrBlock: !Ref PublicSubnet2CidrBlock
+      MapPublicIpOnLaunch: true
+      Tags: 
+        - Key: Network
+          Value: Public
+        - Key: Name
+          Value: public-2
 
   PrivateSubnet1: 
     Type: AWS::EC2::Subnet
@@ -66,6 +111,18 @@ Resources:
           Value: Private
         - Key: Name
           Value: private-1
+          
+  PrivateSubnet2: 
+    Type: AWS::EC2::Subnet
+    Properties: 
+      VpcId: !Ref VPC
+      AvailabilityZone: !Ref AvailabilityZone2
+      CidrBlock: !Ref PrivateSubnet2CidrBlock
+      Tags: 
+        - Key: Network
+          Value: Private
+        - Key: Name
+          Value: private-2
 
   InternetGateway: 
     Type: AWS::EC2::InternetGateway
@@ -129,12 +186,27 @@ Resources:
     Properties: 
       SubnetId: !Ref PrivateSubnet1
       RouteTableId: !Ref PrivateRouteTable
+      
+  PrivateSubnet2RouteTableAssociation: 
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties: 
+      SubnetId: !Ref PrivateSubnet2
+      RouteTableId: !Ref PrivateRouteTable
+
 
   PublicSubnet1RouteTableAssociation: 
     Type: AWS::EC2::SubnetRouteTableAssociation
     Properties: 
       SubnetId: !Ref PublicSubnet1
       RouteTableId: !Ref PublicRouteTable
+  
+  PublicSubnet2RouteTableAssociation: 
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties: 
+      SubnetId: !Ref PublicSubnet2
+      RouteTableId: !Ref PublicRouteTable
+
+  
 
   NetworkAcl: 
     Type: AWS::EC2::NetworkAcl
@@ -168,8 +240,187 @@ Resources:
       SubnetId: !Ref PublicSubnet1
       NetworkAclId: !Ref NetworkAcl
 
+  PublicSubnet2NetworkAclAssociation: 
+    Type: AWS::EC2::SubnetNetworkAclAssociation
+    Properties: 
+      SubnetId: !Ref PublicSubnet2
+      NetworkAclId: !Ref NetworkAcl
+
   PrivateSubnet1NetworkAclAssociation: 
     Type: AWS::EC2::SubnetNetworkAclAssociation
     Properties: 
-      SubnetId: !Ref PublicSubnet1
+      SubnetId: !Ref PrivateSubnet1
       NetworkAclId: !Ref NetworkAcl
+      
+  PrivateSubnet2NetworkAclAssociation: 
+    Type: AWS::EC2::SubnetNetworkAclAssociation
+    Properties: 
+      SubnetId: !Ref PrivateSubnet2
+      NetworkAclId: !Ref NetworkAcl
+
+  LoadBalancerSecurityGroup:
+    Properties:
+      GroupDescription: Allow traffic  from 8080
+      SecurityGroupEgress:
+        - CidrIp: 0.0.0.0/0
+          FromPort: "-1"
+          IpProtocol: "-1"
+          ToPort: "-1"
+      SecurityGroupIngress:
+        - CidrIp: 0.0.0.0/0
+          FromPort: '8080'
+          IpProtocol: tcp
+          ToPort: '8080'
+      VpcId: !Ref VPC
+    Type: AWS::EC2::SecurityGroup
+
+  ContainerSecurityGroup:
+    Properties:
+      GroupDescription: Allow HTTP from Load Balancer
+      SecurityGroupEgress:
+        - CidrIp: 0.0.0.0/0
+          FromPort: "-1"
+          IpProtocol: "-1"
+          ToPort: "-1"
+      SecurityGroupIngress:
+        - FromPort: '8080'
+          IpProtocol: tcp
+          ToPort: '8080'
+          SourceSecurityGroupId: !Ref LoadBalancerSecurityGroup
+      VpcId: !Ref VPC
+    Type: AWS::EC2::SecurityGroup
+
+
+  LoadBalancer:
+    Type: "AWS::ElasticLoadBalancingV2::LoadBalancer"
+    Properties:
+      LoadBalancerAttributes:
+        - Key: idle_timeout.timeout_seconds
+          Value: '60'
+      Scheme: internet-facing
+      SecurityGroups:
+        - !Ref LoadBalancerSecurityGroup
+      Subnets: [!Ref PublicSubnet1, !Ref PublicSubnet2]
+
+
+  HTTPListener:
+    Type: "AWS::ElasticLoadBalancingV2::Listener"
+    Properties:
+      DefaultActions:
+        - TargetGroupArn: !Ref TargetGroup
+          Type: forward
+      LoadBalancerArn: !Ref LoadBalancer
+      Port: 8080
+      Protocol: HTTP
+
+  TargetGroup:
+    Type: "AWS::ElasticLoadBalancingV2::TargetGroup"
+    DependsOn: LoadBalancer
+    Properties:
+      HealthCheckIntervalSeconds: 120
+      HealthCheckPath: "/"
+      HealthCheckProtocol: HTTP
+      HealthCheckTimeoutSeconds: 30
+      HealthyThresholdCount: 4
+      Matcher:
+        HttpCode: '200'
+      Port: 80
+      Protocol: HTTP
+      TargetGroupAttributes:
+        - Key: deregistration_delay.timeout_seconds
+          Value: '60'
+      UnhealthyThresholdCount: 3
+      TargetType: 'ip'
+      VpcId: !Ref VPC
+
+  Cluster:
+    Type: "AWS::ECS::Cluster"
+
+  TaskExecutionRole:
+    Type: "AWS::IAM::Role"
+    Properties:
+      AssumeRolePolicyDocument:
+        Statement:
+          Action: sts:AssumeRole
+          Effect: Allow
+          Principal:
+            Service:
+              - ecs-tasks.amazonaws.com
+      ManagedPolicyArns:
+        - "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
+
+  Service:
+    Type: "AWS::ECS::Service"
+    Properties:
+      Cluster: !Ref Cluster
+      LaunchType: FARGATE
+      DesiredCount: 1
+      LoadBalancers:
+        - ContainerName: flask
+          ContainerPort: 8080
+          TargetGroupArn: !Ref TargetGroup
+      NetworkConfiguration:
+        AwsvpcConfiguration:
+          SecurityGroups:
+            - !Ref ContainerSecurityGroup
+          Subnets:
+            - !Ref PrivateSubnet1
+            - !Ref PrivateSubnet2
+      TaskDefinition: !Ref TaskDefinition
+
+
+  TaskDefinition:
+    Type: "AWS::ECS::TaskDefinition"
+    Properties:
+      ContainerDefinitions:
+      -
+        Essential: 'true'
+        Image: !Join ['', [!Ref 'AWS::AccountId',
+                           ".dkr.ecr.",
+                           !Ref 'AWS::Region',
+                           '.amazonaws.com/',
+                           "flask",
+                           ":",
+                           !Ref ImageTag]]
+        Name: flask
+        PortMappings:
+        - ContainerPort: 8080
+        Privileged: 'false'
+      Family: flask
+      Cpu: !Ref Cpu
+      Memory: !Ref Memory
+      NetworkMode: awsvpc
+      ExecutionRoleArn: !Ref TaskExecutionRole
+      TaskRoleArn: !GetAtt 'TaskRole.Arn'
+      RequiresCompatibilities:
+        - FARGATE
+
+
+  TaskRole:
+    Properties:
+      AssumeRolePolicyDocument:
+        Statement:
+          Action: sts:AssumeRole
+          Effect: Allow
+          Principal:
+            Service:
+            - ecs-tasks.amazonaws.com
+      Policies:
+      - PolicyDocument:
+          Version: '2012-10-17'
+          Statement:
+          - Action:
+            - s3:PutObject
+            Effect: Allow
+            Resource:
+            - "arn:aws:s3:::flaskdemobucket"
+        PolicyName: s3Permissions
+    Type: AWS::IAM::Role
+
+Outputs:
+  ContainerSecurityGroup:
+    Description: container securoty group
+    Value: !Ref ContainerSecurityGroup
+  LoadBalancer:
+    Description: A reference to the Application Load Balancer
+    Value: !Ref LoadBalancer
