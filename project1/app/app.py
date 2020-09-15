@@ -11,5 +11,12 @@ class HelloWorld(Resource):
 
 api.add_resource(HelloWorld, '/')
 
+@app.route("/download/<filename>", methods=['GET'])
+def download(filename):
+    if request.method == 'GET':
+        output = download_file(filename, BUCKET)
+
+        return send_file(output, as_attachment=True)
+
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')
