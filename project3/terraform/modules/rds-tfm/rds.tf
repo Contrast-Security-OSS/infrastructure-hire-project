@@ -1,23 +1,22 @@
 module "rds" {
-  source     = "terraform-aws-modules/rds/aws"
-  version    = "2.24.0"
+  source  = "terraform-aws-modules/rds/aws"
+  version = "2.24.0"
 
   identifier        = "${var.application}-${var.environment}-${var.identifier}-rds"
   apply_immediately = var.db_apply_immediately
 
-  engine                          = var.db_engine
-  engine_version                  = var.db_engine_version
-#  enabled_cloudwatch_logs_exports = ["slowquery"]
-  major_engine_version            = var.db_major_engine_version
-  instance_class                  = var.db_instance_class
-  allocated_storage               = var.db_allocated_storage
+  engine         = var.db_engine
+  engine_version = var.db_engine_version
+  major_engine_version = var.db_major_engine_version
+  instance_class       = var.db_instance_class
+  allocated_storage    = var.db_allocated_storage
   # auto scale capable factor
   max_allocated_storage = tostring(tonumber(var.db_allocated_storage) * 2)
   storage_encrypted     = true
   storage_type          = var.db_storage_type
 
   name     = var.db_name
-  username = "contrast"
+  username = "admin"
   password = random_password.db_password.result
   port     = var.db_port
 
@@ -85,7 +84,6 @@ resource "aws_security_group_rule" "security_group_rules" {
   security_group_id        = aws_security_group.rds.id
 }
 
-### SSM
 resource "random_password" "db_password" {
   keepers = {
     rotator = var.db_rotate_password
@@ -95,16 +93,3 @@ resource "random_password" "db_password" {
   override_special = "_%$"
 }
 
-resource "aws_ssm_parameter" "db_password" {
-  name        = "/${var.application}/${var.environment}/${var.identifier}/database/password"
-  description = "${var.application} ${var.environment} ${var.identifier} database Password"
-  type        = "SecureString"
-  value       = random_password.db_password.result
-
-  tags = merge(
-    var.tags,
-    map(
-      "role", "db"
-    )
-  )
-}

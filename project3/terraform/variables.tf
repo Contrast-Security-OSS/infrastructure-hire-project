@@ -10,11 +10,11 @@ variable "db_deletion_protection" {
   default     = false
 }
 variable "db_instance_class" {
-  description = "The instance type of the RDS instance - Must be set per env, in terraform.tfvars; or passed in at execution time"
+  description = "The instance type of the RDS instance"
   type        = string
 }
 variable "db_maintenance_window" {
-  description = "The window to perform maintenance in UTC. Syntax: 'ddd:hh24:mi-ddd:hh24:mi'. Eg: 'Mon:00:00-Mon:03:00'"
+  description = "The window to perform maintenance in UTC."
   type        = string
   default     = "Tue:07:00-Tue:07:30"
 }
@@ -35,10 +35,6 @@ variable "db_performance_insights_enable" {
 variable "vpc_cidr" {
   description = "CIDR of the vpc"
   default     = "10.94.0.0/16"
-  type        = string
-}
-variable "vpc_dns_zone" {
-  description = "The name of the route53 zone used by this VPC - Must be set per env, in terraform.tfvars; or passed in at execution time"
   type        = string
 }
 variable "vpc_exclude_ids" {
@@ -65,16 +61,16 @@ variable "database_subnets" {
 
 # Attributes
 variable "application" {
-  description = "Denotes the corresponding 'application' (e.g. 'Hub', Team Server', 'Ardy')"
+  description = "Denotes the corresponding 'application'"
   type        = string
-  default     = "platform"
+  default     = "project3"
 }
 variable "environment" {
-  description = "Denotes the environment, a vertical slice of the infrastructure (e.g. 'staging', 'app') Specified per env, in the terraform.tfvars file"
+  description = "Denotes the environment, a vertical slice of the infrastructure"
   type        = string
 }
 variable "identifier" {
-  description = "Denotes the corresponding 'identifier' (e.g. '001', '002')"
+  description = "Denotes the corresponding 'identifier'"
   type        = string
   default     = "001"
 }
