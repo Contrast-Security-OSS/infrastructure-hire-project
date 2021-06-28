@@ -178,7 +178,7 @@ variable "db_parameters" {
     },
     {
       name  = "log_queries_not_using_indexes"
-      value = "1"
+      value = "0"
     },
     {
       name  = "long_query_time"
@@ -190,7 +190,7 @@ variable "db_parameters" {
     },
     {
       name         = "performance_schema"
-      value        = "1"
+      value        = "0"
       apply_method = "pending-reboot"
     },
     {
@@ -201,6 +201,34 @@ variable "db_parameters" {
       name  = "log_output"
       value = "FILE"
     },
+    {
+      name  = "innodb_sort_buffer_size"
+      value = "262144"
+    },
+    {
+      name  = "sort_buffer_size"
+      value = "20971520"
+    },
+    {
+      name  = "sync_binlog"
+      value = "1"
+    },
+    {
+      name  = "binlog_format"
+      value = "STATEMENT"
+    },
+    {
+      name  = "transaction_isolation"
+      value = "READ-COMMITTED"
+    },
+    {
+      name  = "binlog_checksum"
+      value = "NONE"
+    },
+    {
+      name  = "skip_name_resolve"
+      value = "OFF"
+    }
   ]
 }
 

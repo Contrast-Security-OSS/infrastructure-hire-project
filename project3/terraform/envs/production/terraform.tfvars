@@ -7,34 +7,25 @@ db_instance_class = "db.t3.medium"
 # RDS
 db_parameters = [
   {
-    name  = "log_bin_trust_function_creators"
-    value = "1"
-  },
-  {
     name  = "log_queries_not_using_indexes"
     value = "1"
   },
   {
-    name  = "long_query_time"
-    value = "3"
-  },
-  {
-    name  = "max_allowed_packet"
-    value = "33554432"
-  },
-  {
-    name         = "performance_schema"
-    value        = "1"
-    apply_method = "pending-reboot"
-  },
-  {
     name  = "slow_query_log"
-    value = "1"
+    value = "0"
   },
   {
-    name  = "log_output"
-    value = "FILE"
+    name  = "innodb_buffer_pool_size"
+    value = "536870912"
   },
+  {
+    name  = "innodb_log_buffer_size"
+    value = "262144"
+  },
+  {
+    name  = "innodb_log_file_size"
+    value = "2097152"
+  }
 ]
 
 
