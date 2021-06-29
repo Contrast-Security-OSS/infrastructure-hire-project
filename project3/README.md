@@ -19,11 +19,13 @@ The overall concept of this project is to FIXME
 
 # Tasks
 
+1. Stand up the the Terraform managed RDS infrastructure (see `terraform/envs/production/README.md`
+1. Load data file located in `mysql/FIXME` into RDS
 1. FIXME
 
 
 ### Senior Candidates (or anyone looking to have some more fun!)
-For a senior candidate we'd like to explore more into your Kubernetes knowledge. 
+For a senior candidate we'd like to explore more into your FIXME
 
 1. FIXME
 
@@ -40,7 +42,7 @@ For a senior candidate we'd like to explore more into your Kubernetes knowledge.
 
 # Bonus points!
 
-Add what you feel could be missing from this project. Show us how you think about running FIXME
+Add what you feel could be missing from this project. Show us how you think about running RDS/MySQL/Terraform/FIXME
 and what you are passionate about.
 
 # Feedback

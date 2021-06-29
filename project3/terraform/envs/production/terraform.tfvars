@@ -1,10 +1,9 @@
 # Provider
 aws_region = "us-east-1"
 
-# Main
-db_instance_class = "db.t3.medium"
 
 # RDS
+db_instance_class = "db.t3.medium"
 db_parameters = [
   {
     name  = "log_queries_not_using_indexes"
