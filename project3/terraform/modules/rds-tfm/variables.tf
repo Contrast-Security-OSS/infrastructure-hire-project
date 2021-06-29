@@ -81,7 +81,7 @@ variable "db_family" {
 variable "db_engine_version" {
   description = "The engine version to use"
   type        = string
-  default     = "8.0.20"
+  default     = "8.0.23"
 }
 
 variable "db_snapshot_identifier" {
