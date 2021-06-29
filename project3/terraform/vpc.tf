@@ -4,18 +4,18 @@ module "vpc" {
   name             = "${var.application}-${var.environment}"
   cidr             = var.vpc_cidr
   azs              = slice(data.aws_availability_zones.available.names, 0, 3)
-  public_subnets   = var.public_subnets
-  private_subnets  = var.private_subnets
   database_subnets = var.database_subnets
+  private_subnets  = var.private_subnets
+  public_subnets   = var.public_subnets
 
-  public_subnet_tags = {
-    subnet = "public"
+  database_subnet_tags = {
+    subnet = "database"
   }
   private_subnet_tags = {
     subnet = "private"
   }
-  database_subnet_tags = {
-    subnet = "database"
+  public_subnet_tags = {
+    subnet = "public"
   }
 
   enable_nat_gateway     = true

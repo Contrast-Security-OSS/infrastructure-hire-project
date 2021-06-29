@@ -1,3 +1,4 @@
+# Provider
 variable "aws_region" {
   default = "us-east-1"
 }
@@ -30,8 +31,22 @@ variable "db_performance_insights_enable" {
 }
 
 
-
 # VPC
+variable "database_subnets" {
+  default     = ["10.94.251.0/24", "10.94.252.0/24", "10.94.253.0/24"]
+  description = "Database subnet CIDR layout"
+  type        = list(string)
+}
+variable "private_subnets" {
+  default     = ["10.94.0.0/20", "10.94.16.0/20", "10.94.32.0/20"]
+  description = "Private subnet CIDR layout"
+  type        = list(string)
+}
+variable "public_subnets" {
+  default     = ["10.94.96.0/20", "10.94.112.0/20", "10.94.128.0/20"]
+  description = "Public subnet CIDR layout"
+  type        = list(string)
+}
 variable "vpc_cidr" {
   description = "CIDR of the vpc"
   default     = "10.94.0.0/16"
@@ -41,21 +56,6 @@ variable "vpc_exclude_ids" {
   description = "The zone ids to exclude"
   type        = list(string)
   default     = []
-}
-variable "public_subnets" {
-  default     = ["10.94.96.0/20", "10.94.112.0/20", "10.94.128.0/20"]
-  description = "Public subnet CIDR layout"
-  type        = list(string)
-}
-variable "private_subnets" {
-  default     = ["10.94.0.0/20", "10.94.16.0/20", "10.94.32.0/20"]
-  description = "Private subnet CIDR layout"
-  type        = list(string)
-}
-variable "database_subnets" {
-  default     = ["10.94.251.0/24", "10.94.252.0/24", "10.94.253.0/24"]
-  description = "Database subnet CIDR layout"
-  type        = list(string)
 }
 
 
@@ -80,6 +80,5 @@ locals {
     "application", var.application,
     "environment", var.environment,
   )
-  environment = try(var.environment, "")
 }
 

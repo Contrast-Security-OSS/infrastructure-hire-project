@@ -1879,8 +1879,3 @@ variable "elasticache_outbound_acl_rules" {
   ]
 }
 
-variable "sumo_ingest_environment" {
-  description = "Sumo ingest lambda environment name"
-  type        = string
-  default     = ""
-}

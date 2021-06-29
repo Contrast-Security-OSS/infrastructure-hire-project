@@ -10,7 +10,7 @@ You will need the following:
 
 * A fork of this repository (If you have concerns about this, let us know!)
 * An AWS account (Contrast will provide a temporary one)
-* Terraform
+* Terraform v0.13.x
 * FIXME
 
 # Overview

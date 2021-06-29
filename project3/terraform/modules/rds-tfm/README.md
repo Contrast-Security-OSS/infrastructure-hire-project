@@ -61,8 +61,6 @@ No requirements.
 | identifier | Extra identifier/name for the db | `string` | n/a | yes |
 | internal\_zone\_id | VPCs internal route53 zone id | `string` | n/a | yes |
 | region | AWS Region | `string` | n/a | yes |
-| sumo\_ingest\_environment | Sumo ingest lambda environment name, e.g. ‘staging' or ‘production’” | `string` | `""` | no |
-| sumo\_subscription\_enable | Enable subscription for sumo ingest | `bool` | `false` | no |
 | tags | A map of tags to add to all resources | `map` | n/a | yes |
 | vpc\_id | Identifier for the VPC network | `string` | n/a | yes |
 
