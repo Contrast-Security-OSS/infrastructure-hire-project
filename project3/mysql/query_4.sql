@@ -11,7 +11,7 @@ join   (
           select o.ordernumber, customerNumber, od.productcode
           from   orders       as o
           join   orderdetails as od using (ordernumber)
-          where  o.status      = 'Shipped'
+          where  o.status     like '%Shipped%'
        ) as ords on (cust_ord.customerNumber = ords.customerNumber)
 join   (
           select p.productCode, sum( od.priceeach - p.buyPrice) as revenue
