@@ -2,7 +2,7 @@
 
 # Overview
 
-The data for this project is available from:
+The schema, data and query scripts for this project reside in the 'mysql' directory.  The schema and data is sourced from:
 
 https://www.mysqltutorial.org/mysql-sample-database.aspx
 
@@ -25,11 +25,11 @@ The overall concept of this project is to tune the given MySQL database from bot
 1. Stand up the the Terraform managed RDS infrastructure (see `terraform/envs/production/README.md`
 1. Make sure you can connect to the database using the 'mysql' CLI or other MySQL client.
 1. Create the schema and load the data found in script 'schema_and_data.sql'.
-1. Pick three of the queries from the 'query_N.sql' set of scripts in the 'mysql' directory and do whatever it takes to improve or optimize them to perform well.
+1. Pick three of the queries from the 'query_N.sql' set of scripts and do whatever it takes to improve or optimize them to perform well.
 
 # Notes
 
-The given sample database is tiny, so there will be no real performance issues using it.  Therefore, assume when reading an EXPLAIN plan that instead of hundreds of rows, you will encounter 10's to 100's of millions of rows.
+The given sample database is tiny, so there will be no real performance issues using it.  Therefore, assume when reading an EXPLAIN plan that instead of hundreds of rows, you will encounter 10's or 100's of millions of rows.
 
 # Bonus points!
 
