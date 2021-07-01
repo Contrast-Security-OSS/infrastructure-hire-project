@@ -2,7 +2,11 @@
 
 # Overview
 
-At Contrast we like to play hard, work hard, and automate our SaaS environment end to end. We made this project so you can showcase your skills and give us a better idea of your individual talents!
+The data for this project is available from:
+
+https://www.mysqltutorial.org/mysql-sample-database.aspx
+
+The ERD and other documentation is also available at this site.
 
 # Setup
 
@@ -11,40 +15,27 @@ You will need the following:
 * A fork of this repository (If you have concerns about this, let us know!)
 * An AWS account (Contrast will provide a temporary one)
 * Terraform v0.13.x
-* FIXME
 
 # Overview
 
-The overall concept of this project is to FIXME
+The overall concept of this project is to tune the given MySQL database from both a system and application perspective.
 
 # Tasks
 
 1. Stand up the the Terraform managed RDS infrastructure (see `terraform/envs/production/README.md`
-1. Load data file located in `mysql/FIXME` into RDS
-1. FIXME
+1. Make sure you can connect to the database using the 'mysql' CLI or other MySQL client.
+1. Create the schema and load the data found in script 'schema_and_data.sql'.
+1. Pick three of the queries from the 'query_N.sql' set of scripts in the 'mysql' directory and do whatever it takes to improve or optimize them to perform well.
 
+# Notes
 
-### Senior Candidates (or anyone looking to have some more fun!)
-For a senior candidate we'd like to explore more into your FIXME
-
-1. FIXME
-
-
-#### Optional
-
-1. FIXME
-
-
-## Things to keep in mind
-
-- Treat this like a production service - think about concepts such as reliability, principle of least privilege, availability, security, etc.
-- Break down the work into sizeable chunks (PR per task, commit per task, etc). Show us how you would approach this work.
+The given sample database is tiny, so there will be no real performance issues using it.  Therefore, assume when reading an EXPLAIN plan that instead of hundreds of rows, you will encounter 10's to 100's of millions of rows.
 
 # Bonus points!
 
-Add what you feel could be missing from this project. Show us how you think about running RDS/MySQL/Terraform/FIXME
-and what you are passionate about.
+If you feel that one or more of these queries should not actually be used on an OLTP system, what would you recommend and why?
 
 # Feedback
 
 We love feedback. PR or create issues on this repository with feedback on what we could do better!
+
