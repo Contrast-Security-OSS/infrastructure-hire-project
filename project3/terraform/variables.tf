@@ -23,6 +23,65 @@ variable "db_parameters" {
   description = "DB parameters"
   type        = list(map(string))
   default     = null
+  default = [
+    {
+      name  = "log_bin_trust_function_creators"
+      value = "1"
+    },
+    {
+      name  = "log_queries_not_using_indexes"
+      value = "0"
+    },
+    {
+      name  = "long_query_time"
+      value = "3"
+    },
+    {
+      name  = "max_allowed_packet"
+      value = "33554432"
+    },
+    {
+      name         = "performance_schema"
+      value        = "0"
+      apply_method = "pending-reboot"
+    },
+    {
+      name  = "slow_query_log"
+      value = "1"
+    },
+    {
+      name  = "log_output"
+      value = "FILE"
+    },
+    {
+      name  = "innodb_sort_buffer_size"
+      value = "262144"
+    },
+    {
+      name  = "sort_buffer_size"
+      value = "20971520"
+    },
+    {
+      name  = "sync_binlog"
+      value = "1"
+    },
+    {
+      name  = "binlog_format"
+      value = "STATEMENT"
+    },
+    {
+      name  = "transaction_isolation"
+      value = "READ-COMMITTED"
+    },
+    {
+      name  = "binlog_checksum"
+      value = "NONE"
+    },
+    {
+      name  = "skip_name_resolve"
+      value = "OFF"
+    }
+  ]
 }
 variable "db_performance_insights_enable" {
   description = "Enable/Disable performance insights"
