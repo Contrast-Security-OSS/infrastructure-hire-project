@@ -23,6 +23,7 @@ The overall concept of this project is to tune the given MySQL database from bot
 # Tasks
 
 1. Stand up the the Terraform managed RDS infrastructure (see `terraform/envs/production/README.md`)
+1. Stand up the the Terraform managed RDS infrastructure (see rs. [Infrastructure README](./terraform/envs/production/README.md))
 1. Make sure you can connect to the database using the 'mysql' CLI or other MySQL client.
 1. Create the schema and load the data found in script 'schema_and_data.sql'.
 1. Pick three of the queries from the 'query_N.sql' set of scripts and do whatever it takes to improve or optimize them to perform well.
@@ -30,6 +31,8 @@ The overall concept of this project is to tune the given MySQL database from bot
 # Notes
 
 The given sample database is tiny, so there will be no real performance issues using it.  Therefore, assume when reading an EXPLAIN plan that instead of hundreds of rows, you will encounter 10's or 100's of millions of rows.
+
+File `terraform/modules/rds-tfm/variables.tf` has the apply_method for `performance_schema` set to "pending-reboot". What other parameters might need this same apply_method?
 
 # Bonus points!
 
