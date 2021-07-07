@@ -31,7 +31,7 @@ The overall concept of this project is to tune the given MySQL database from bot
 
 The given sample database is tiny, so there will be no real performance issues using it.  Therefore, assume when reading an EXPLAIN plan that instead of hundreds of rows, you will encounter 10's or 100's of millions of rows.
 
-File `terraform/modules/rds-tfm/variables.tf` has the apply_method for `performance_schema` set to "pending-reboot". What other parameters might need this same apply_method?
+File `terraform/variables.tf` has the apply_method for `performance_schema` set to "pending-reboot". What other parameters might need this same apply_method?
 
 # Bonus points!
 
