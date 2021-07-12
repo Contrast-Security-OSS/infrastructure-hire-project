@@ -22,7 +22,6 @@ variable "db_maintenance_window" {
 variable "db_parameters" {
   description = "DB parameters"
   type        = list(map(string))
-  default     = null
   default = [
     {
       name  = "log_bin_trust_function_creators"

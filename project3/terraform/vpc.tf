@@ -18,8 +18,8 @@ module "vpc" {
     subnet = "public"
   }
 
-  enable_nat_gateway     = true
-  single_nat_gateway     = true
+  enable_nat_gateway = true
+  single_nat_gateway = true
 
   create_database_subnet_group           = false
   create_database_subnet_route_table     = true
