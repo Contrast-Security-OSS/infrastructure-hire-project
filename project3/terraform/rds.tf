@@ -11,7 +11,7 @@ module the_app_db {
   db_maintenance_window          = var.db_maintenance_window
   db_parameters                  = var.db_parameters
   db_performance_insights_enable = var.db_performance_insights_enable
-  db_subnets                     = data.aws_subnet_ids.database.ids
+  db_subnets                     = module.vpc.database_subnets
   environment                    = var.environment
   region                         = var.aws_region
   tags                           = local.common_tags
