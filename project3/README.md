@@ -14,11 +14,11 @@ You will need the following:
 
 * A fork of this repository (If you have concerns about this, let us know!)
 * An AWS account (Contrast will provide a temporary one)
-* Terraform v0.13.x
+* IMPORTANT - Terraform v0.13.x (newer versions will not work)
 
 # Overview
 
-The overall concept of this project is to tune the given MySQL database from both a system and application perspective.
+The overall concept of this project is to tune the given MySQL database using infrastructure as code techniques for the system level. You will tune the application level based on what you feel is the right way to communicate changes to Application Engineers. 
 
 # Tasks
 
