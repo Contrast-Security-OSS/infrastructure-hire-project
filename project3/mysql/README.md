@@ -8,7 +8,7 @@ The goal of this section of Project 3 is to allow you to demonstrate your unders
 
 * 30,000 queries per second. 
 * Tables are both wide and deep and we will ask you to extrapolate about this
-* BOnus - we have a rare workload of 90% write, 10% read. If you are able to converse about this situation it would be extra impressive.
+* Bonus - we have a rare workload of 90% write, 10% read. If you are able to converse about this situation it would be extra impressive.
 
 Choose three(3) of the queries and tune them. Be ready to talk about the following:
 
