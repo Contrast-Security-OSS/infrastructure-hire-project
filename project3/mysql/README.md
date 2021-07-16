@@ -2,7 +2,7 @@
 
 The goal of this section of Project 3 is to allow you to demonstrate your understanding of query tuning and schema in a MySQL database.
 
-*Important* - Not every candidate will have direct MySQL experience. That is okay. Google away against your RDBMS of expertise. You goal is to show us you can _translate_ RDBMS expertise from one vendor to another.
+*Important* - Not every candidate will have direct MySQL experience. That is okay. Google away against your RDBMS of expertise. The goal is to show us you can _translate_ RDBMS expertise from one vendor to another.
 
 *Important* - The term "busy environment" will be used frequently. For the purpose of this discussion, busy is 
 
