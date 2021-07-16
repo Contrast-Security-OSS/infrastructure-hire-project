@@ -38,7 +38,7 @@ You will need the following:
 
 # Infrastructure
 
-1. Stand up the the Terraform managed RDS infrastructure (see [Infrastructure README](./terraform/envs/production/README.md)).
+1. Stand up the Terraform managed RDS infrastructure (see [Infrastructure README](./terraform/envs/production/README.md)).
 1. Make sure you can connect to the database using the 'mysql' CLI or other MySQL client.
 1. Take a good look RDS param group and apply any changes to your live instance. 
 
