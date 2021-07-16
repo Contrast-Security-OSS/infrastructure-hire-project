@@ -47,6 +47,7 @@ Please plan to demo your connection and use of the client.
 # Database
 
 1. Create the schema and load the data found in script `schema_and_data.sql`.
+1. Take a moment to understand the purpose of this portion of the project (see [MySQL README](./mysql/README.md)).
 1. Pick three of the queries from the `query_N.sql` set of scripts and do whatever it takes to improve or optimize them to perform well.
 
 The schema, data and query scripts for this project reside in the `mysql` directory.  The schema and data is sourced from:
