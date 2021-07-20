@@ -9,7 +9,7 @@ This project has you working in two modes:
 
 There are two distinct parts:
 
-You will first create an RDS instance with Terraform that is provided. There are opportunities to make make a PR that describes the changes you might make to the server configuration for better performance. For this you will need to read and change configuration and possibly even add to the terraform to better secure the database. Show off a bit if you like. Don't worry if we don't agree with something. In this setting it is the conversation that is most valuable. 
+You will first create an RDS instance with Terraform that is provided. There are opportunities to make a PR that describes the changes you might make to the server configuration for better performance. For this you will need to read and change configuration and possibly even add to the terraform to better secure the database. Show off a bit if you like. Don't worry if we don't agree with something. In this setting it is the conversation that is most valuable. 
 
 During the first part you will load a common schema so that you have a reasonably realistic dataset. 
 
