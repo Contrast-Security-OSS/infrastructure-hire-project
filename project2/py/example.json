@@ -1,0 +1,64 @@
+{
+    "vulnerabilities": [
+        {
+            "id": "1",
+            "vendor_id": "4",
+            "severity": "HIGH"
+        },
+        {
+            "id": "2",
+            "vendor_id": "4",
+            "severity": "LOW"
+        },
+        {
+            "id": "3",
+            "vendor_id": "4",
+            "severity": "MEDIUM"
+        },
+        {
+            "id": "4",
+            "vendor_id": "4",
+            "severity": "HIGH"
+        },
+        {
+            "id": "5",
+            "vendor_id": "3",
+            "severity": "HIGH"
+        },
+        {
+            "id": "6",
+            "vendor_id": "3",
+            "severity": "LOW"
+        },
+        {
+            "id": "7",
+            "vendor_id": "3",
+            "severity": "HIGH"
+        },
+        {
+            "id": "8",
+            "vendor_id": "2",
+            "severity": "HIGH"
+        },
+        {
+            "id": "9",
+            "vendor_id": "2",
+            "severity": "LOW"
+        },
+        {
+            "id": "10",
+            "vendor_id": "1",
+            "severity": "HIGH"
+        },
+        {
+            "id": "11",
+            "vendor_id": "1",
+            "severity": "LOW"
+        },
+        {
+            "id": "12",
+            "vendor_id": "1",
+            "severity": "MEDIUM"
+        }
+    ]
+}
