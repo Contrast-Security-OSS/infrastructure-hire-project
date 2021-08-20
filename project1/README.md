@@ -13,7 +13,32 @@ You will need the following:
 * Docker
 * Python
 * [AWS CLI](https://aws.amazon.com/cli/)
+* Terraform 
 
+# Deploying the current stack
+
+1. Run the resources stack, this will create the user with necessary permissions and the repository where the Docker image is going to be uploaded
+
+```sh
+
+cd resources
+terraform init
+terraform plan
+terraform apply
+
+```
+
+You will get the repository and the user you will use for the infrastructure deployment
+
+
+2. Upload the docker image
+
+You will need to run the following action: `publish-app`
+3. Run the Infrastructure Stack
+
+TBD
+
+################################
 # Deploying the current stack
 
 ```
