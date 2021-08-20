@@ -1,6 +1,9 @@
 name: publish-app
 
-on: push
+on:
+  push:
+    branches:
+      - develop
 
 jobs:
   publish-app:
