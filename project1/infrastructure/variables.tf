@@ -1,5 +1,5 @@
 variable "project_name_prefix" {
-    description = "The AWS zone to create things in."
+    description = "Name of the project"
     default = "ops-hire-project"
 }
 
