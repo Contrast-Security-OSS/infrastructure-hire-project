@@ -13,19 +13,13 @@ You will need the following:
 * Docker
 * Python
 * [AWS CLI](https://aws.amazon.com/cli/)
-
-# Deploying the current stack
-
-```
-aws cloudformation deploy --template-file infrastructure/infrastructure.yml --stack-name ops-hire-project --tags Name=ops-hire-project Environment=dev
-```
+* Terraform
 
 # Tasks
 
-- Update the infrastructure to run the container in Fargate
-    - If you want to use Terraform instead, please do! We use both at Contrast and enjoy discussions comparing the two.
-- Add monitoring for your service
+- Create AWS infrastructure using Terraform to run the container as a service in ECS Fargate
 - Add an endpoint to `app.py` to return a file from an S3 bucket
+- Add monitoring for your service
 
 ## Things to keep in mind
 
