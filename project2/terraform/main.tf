@@ -1,7 +1,7 @@
 provider "aws" {
   region = var.region
-  shared_credentials_file = "terraform/.aws/credentials"
-  profile                 = "AWS_Profile"
+  #shared_credentials_file = "~/.aws/credentials"
+  #profile                 = "AWS_Profile"
 }
 
 data "aws_eks_cluster" "cluster1" {

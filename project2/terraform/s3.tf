@@ -1,6 +1,6 @@
 
 resource "aws_s3_bucket" "vancouver-canada" {
-   bucket = var.bucket
+   bucket = "vancouver-canada"
    force_destroy = true
    #region = var.region
 }
@@ -40,9 +40,11 @@ resource "aws_dynamodb_table" "terraform_locks" {
     type = "S"
   }
 }
-*/
+
 
 output "s3_bucket_arn" {
   value       = aws_s3_bucket.terraform_state.arn
   description = "The ARN of the S3 bucket"
 }
+
+*/

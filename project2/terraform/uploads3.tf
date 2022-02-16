@@ -1,7 +1,7 @@
 
 
 resource "aws_s3_object" "object" {
-  bucket = var.s3bucket
+  bucket = var.bucket
   key    = "example.json"
   source = "example.json"
 
