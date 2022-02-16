@@ -1,0 +1,18 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: vuln-python
+  labels:
+    app: vuln-python
+  annotations:
+    kubernetes.io/ingress.class: alb
+    alb.ingress.kubernetes.io/scheme: internet-facing
+spec:
+  rules:
+    - http:
+        paths:
+          - path: /vulns
+            backend:
+              serviceName: vuln-python
+              servicePort: 80
+EOF
