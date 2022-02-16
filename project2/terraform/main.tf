@@ -1,12 +1,14 @@
 provider "aws" {
   region = var.region
+  shared_credentials_file = "terraform/.aws/credentials"
+  profile                 = "AWS_Profile"
 }
 
-data "aws_eks_cluster" "cluster" {
+data "aws_eks_cluster" "cluster1" {
   name = module.eks.cluster_id
 }
 
-data "aws_eks_cluster_auth" "cluster" {
+data "aws_eks_cluster_auth" "cluster1" {
   name = module.eks.cluster_id
 }
 
@@ -23,8 +25,8 @@ data "aws_caller_identity" "current" {}
 
 module "vpc" {
   source               = "terraform-aws-modules/vpc/aws"
-  name                 = "contrast-example"
-  cidr                 = "10.0.0.0/16"
+  name                 = var.vpc_name
+  cidr                 = var.vpc_cidr
   azs                  = data.aws_availability_zones.available.names
   public_subnets       = ["10.0.1.0/24", "10.0.2.0/24", "10.0.3.0/24"]
   enable_dns_hostnames = true
@@ -37,17 +39,19 @@ module "vpc" {
 
 module "eks" {
   source          = "terraform-aws-modules/eks/aws"
-  cluster_version = 1.21
   cluster_name    = local.cluster_name
-  subnets         = module.vpc.public_subnets
-  vpc_id          = module.vpc.vpc_id
-  enable_irsa     = true
+  cluster_version = 1.21
+  subnet_ids      = module.vpc.public_subnets
+  enable_irsa = true
 
-  worker_groups = [
-    {
-      name                 = "worker-group-1"
-      instance_type        = "t2.medium"
-      asg_desired_capacity = 1
+  vpc_id = module.vpc.vpc_id
+
+  self_managed_node_groups = {
+    one = {
+      name                          = "worker-group-1"
+      instance_type                 = var.inst_type
+      asg_desired_capacity          = 2
     }
-  ]
 }
+}
+
