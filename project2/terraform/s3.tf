@@ -19,13 +19,13 @@ resource "aws_dynamodb_table" "terraform-lock" {
         "Name" = "DynamoDB Terraform State Lock Table"
     }
 }
-
+*/
 
 terraform {
   backend "s3" {
     key            = "terraform.tfstate"
-    bucket         = "terraform-up-and-running-statezpl"
-    region         = "us-west-1"
+    bucket         = "vancouver-canada"
+    region         = "us-east-1"
     #dynamodb_table = "terraform-up-and-running-locks"
   }
 }
