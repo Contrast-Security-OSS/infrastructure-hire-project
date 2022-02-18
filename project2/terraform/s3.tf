@@ -1,8 +1,9 @@
 
-resource "aws_s3_bucket" "vancouver-canada" {
-   bucket = "vancouver-canada"
+resource "aws_s3_bucket" "van-can" {
+   bucket = "van-can"
    force_destroy = true
    #region = var.region
+   #acl = "private"
 }
 
 /*
@@ -24,9 +25,10 @@ resource "aws_dynamodb_table" "terraform-lock" {
 terraform {
   backend "s3" {
     key            = "terraform.tfstate"
-    bucket         = "vancouver-canada"
+    bucket         = "tfstate-canada"
     region         = "us-east-1"
     #dynamodb_table = "terraform-up-and-running-locks"
+    profile = "default"
   }
 }
 
