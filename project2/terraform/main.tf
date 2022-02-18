@@ -1,7 +1,8 @@
 provider "aws" {
-  region = var.region
-  #shared_credentials_file = "~/.aws/credentials"
-  #profile                 = "AWS_Profile"
+  region = "us-east-1"
+  shared_credentials_files = ["/Users/asquare/.aws/credentials"]
+  shared_config_files = ["/Users/asquare/.aws/config"]
+  profile                 = "default"
 }
 
 data "aws_eks_cluster" "cluster1" {
