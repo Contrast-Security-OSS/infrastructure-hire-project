@@ -1878,4 +1878,3 @@ variable "elasticache_outbound_acl_rules" {
     },
   ]
 }
-

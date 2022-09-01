@@ -16,10 +16,10 @@ These types of resources are supported:
 * [VPN Gateway](https://www.terraform.io/docs/providers/aws/r/vpn_gateway.html)
 * [VPC Endpoint](https://www.terraform.io/docs/providers/aws/r/vpc_endpoint.html):
   * Gateway: S3, DynamoDB
-  * Interface: EC2, SSM, EC2 Messages, SSM Messages, SQS, ECR API, ECR DKR, API Gateway, KMS, 
-ECS, ECS Agent, ECS Telemetry, SNS, STS, Glue, CloudWatch(Monitoring, Logs, Events), 
-Elastic Load Balancing, CloudTrail, Secrets Manager, Config, CodeBuild, CodeCommit, 
-Git-Codecommit, Transfer Server, Kinesis Streams, Kinesis Firehose, SageMaker(Notebook, Runtime, API), 
+  * Interface: EC2, SSM, EC2 Messages, SSM Messages, SQS, ECR API, ECR DKR, API Gateway, KMS,
+ECS, ECS Agent, ECS Telemetry, SNS, STS, Glue, CloudWatch(Monitoring, Logs, Events),
+Elastic Load Balancing, CloudTrail, Secrets Manager, Config, CodeBuild, CodeCommit,
+Git-Codecommit, Transfer Server, Kinesis Streams, Kinesis Firehose, SageMaker(Notebook, Runtime, API),
 CloudFormation, CodePipeline, Storage Gateway, AppMesh, Transfer, Service Catalog, AppStream,
 Athena, Rekognition, Elastic File System (EFS), Cloud Directory
 

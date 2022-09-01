@@ -27,4 +27,3 @@ The idea behind this project is for candidates to showcase their knowledge of My
 # Feedback
 
 We love feedback. PR or create issues on this repository with feedback on what we could do better!
-

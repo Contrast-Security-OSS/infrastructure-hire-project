@@ -21,4 +21,3 @@ join   (
           having revenue > 1500
        ) as rev on (rev.productCode = ords.productCode)
 ;
-

@@ -8,4 +8,3 @@ where  exists( select ordernumber, sum(priceeach * quantityordered)
                group  by ordernumber
                having sum(priceeach * quantityordered) > 60000
              );
-

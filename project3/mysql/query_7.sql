@@ -10,4 +10,3 @@ from       orderdetails
 inner  join orders using (ordernumber)
 where  year(shippeddate) = 2003
 group  by customernumber;
-

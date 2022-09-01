@@ -139,4 +139,3 @@ locals {
     "environment", var.environment,
   )
 }
-
