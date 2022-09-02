@@ -5,8 +5,8 @@ module "rds" {
   identifier        = "${var.application}-${var.environment}-${var.identifier}-rds"
   apply_immediately = var.db_apply_immediately
 
-  engine         = var.db_engine
-  engine_version = var.db_engine_version
+  engine               = var.db_engine
+  engine_version       = var.db_engine_version
   major_engine_version = var.db_major_engine_version
   instance_class       = var.db_instance_class
   allocated_storage    = var.db_allocated_storage
@@ -92,4 +92,3 @@ resource "random_password" "db_password" {
   special          = true
   override_special = "_%$"
 }
-

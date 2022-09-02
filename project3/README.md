@@ -1,19 +1,19 @@
 # Infrastructure Hire Project 3
 
-The overall concept of this project is to tune the given MySQL database using infrastructure as code techniques for the system level. You will tune the application level based on what you feel is the right way to communicate changes to Application Engineers. 
+The overall concept of this project is to tune the given MySQL database using infrastructure as code techniques for the system level. You will tune the application level based on what you feel is the right way to communicate changes to Application Engineers.
 
 This project has you working in two modes:
 
-* As a Cloud Engineer using Terraform to manage AWS infrastructure. 
+* As a Cloud Engineer using Terraform to manage AWS infrastructure.
 * As a DBA tuning performance of a database server.
 
 There are two distinct parts:
 
-You will first create an RDS instance with Terraform that is provided. There are opportunities to make a PR that describes the changes you might make to the server configuration for better performance. For this you will need to read and change configuration and possibly even add to the terraform to better secure the database. Show off a bit if you like. Don't worry if we don't agree with something. In this setting it is the conversation that is most valuable. 
+You will first create an RDS instance with Terraform that is provided. There are opportunities to make a PR that describes the changes you might make to the server configuration for better performance. For this you will need to read and change configuration and possibly even add to the terraform to better secure the database. Show off a bit if you like. Don't worry if we don't agree with something. In this setting it is the conversation that is most valuable.
 
-During the first part you will load a common schema so that you have a reasonably realistic dataset. 
+During the first part you will load a common schema so that you have a reasonably realistic dataset.
 
-In the second part, you will choose your own adventure in tuning queries. The expectation is that you also treat these as code and write migrations to schema, changes to the SQL, etc in an organized way that expresses an opinion about how you'd implement changes in a busy production environment. 
+In the second part, you will choose your own adventure in tuning queries. The expectation is that you also treat these as code and write migrations to schema, changes to the SQL, etc in an organized way that expresses an opinion about how you'd implement changes in a busy production environment.
 
 Reminder - we are inviting your opinions and we realize that we will not always agree. That is an ideal situation because it happens every day within our team. How you communicate your ideas via code and express your expertise and opinions about work is a key factor in the interview. How we do the same things is designed to help you, the candidate, determine is this is a team you'd like to join.
 
@@ -24,9 +24,9 @@ In general you will need to:
 * Ensure Terraform is installed on your machine (pay attn to the version)
 * Check the AWS account provided by us for access.
 * Create the infrastructure and make any improvements
-* Load data and choose your adventures in query tuning. 
+* Load data and choose your adventures in query tuning.
 
-You will find the below very open ended. That is by design. Have fun. Show off. 
+You will find the below very open ended. That is by design. Have fun. Show off.
 
 # Setup
 
@@ -40,9 +40,9 @@ You will need the following:
 
 1. Stand up the Terraform managed RDS infrastructure (see [Infrastructure README](./terraform/envs/production/README.md)).
 1. Make sure you can connect to the database using the 'mysql' CLI or other MySQL client.
-1. Take a good look RDS param group and apply any changes to your live instance. 
+1. Take a good look RDS param group and apply any changes to your live instance.
 
-Please plan to demo your connection and use of the client. 
+Please plan to demo your connection and use of the client.
 
 # Database
 
@@ -71,4 +71,3 @@ File `terraform/variables.tf` has the apply_method for `performance_schema` set 
 # Feedback
 
 We love feedback. PR or create issues on this repository with feedback on what we could do better!
-

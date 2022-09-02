@@ -33,4 +33,3 @@ db_parameters = [
 
 # Attributes
 environment = "production"
-

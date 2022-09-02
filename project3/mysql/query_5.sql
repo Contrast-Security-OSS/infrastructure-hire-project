@@ -6,4 +6,3 @@ inner  join orderdetails using (ordernumber)
 where  status = 'Shipped'
 group  by year
 having year > 2003;
-
