@@ -1,4 +1,4 @@
-# Infrastructure Hire Project 3
+# Infrastructure Hire MySQL Project
 
 The overall concept of this project is to tune the given MySQL database using infrastructure as code techniques for the system level. You will tune the application level based on what you feel is the right way to communicate changes to Application Engineers.
 
