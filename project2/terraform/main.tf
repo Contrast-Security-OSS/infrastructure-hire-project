@@ -14,7 +14,6 @@ provider "kubernetes" {
   host                   = data.aws_eks_cluster.cluster.endpoint
   cluster_ca_certificate = base64decode(data.aws_eks_cluster.cluster.certificate_authority.0.data)
   token                  = data.aws_eks_cluster_auth.cluster.token
-  load_config_file       = false
 }
 
 data "aws_availability_zones" "available" {}
@@ -37,17 +36,17 @@ module "vpc" {
 
 module "eks" {
   source          = "terraform-aws-modules/eks/aws"
-  cluster_version = 1.21
+  cluster_version = 1.26
   cluster_name    = local.cluster_name
-  subnets         = module.vpc.public_subnets
+  subnet_ids      = module.vpc.public_subnets
   vpc_id          = module.vpc.vpc_id
   enable_irsa     = true
 
-  worker_groups = [
-    {
+  self_managed_node_groups = {
+    one = {
       name                 = "worker-group-1"
       instance_type        = "t2.medium"
       asg_desired_capacity = 1
     }
-  ]
+  }
 }
